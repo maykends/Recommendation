@@ -1,0 +1,214 @@
+
+Aula 07 - Testando
+
+>>> from recomendacao import avaliacoes
+>>> avaliacoes['Ana']['Star Trek']
+3.0
+
+>>> avaliacoes['Marcos']['Star Trek']
+1.5
+
+>>> avaliacoes['Ana']
+{'Freddy x Jason': 2.5, 'O Ultimato Bourne': 3.5, 'Star Trek': 3.0, 'Exterminador do Futuro': 3.5, 'Norbit': 2.5, 'Star Wars': 3.0}
+
+
+
+Aula 10 - distanca euclidiana no python
+//eleva ao quadrado com a função pow
+>>> pow(5,2)
+25
+>>> pow (3 - 3, 2)
+0
+>>> pow (3.5 - 4, 2)
+0.25
+>>> from math import sqrt
+>>> sqrt (pow(3 - 3, 2) + pow (3.5 - 4, 2))
+0.5
+>>> sqrt (pow(3 - 1.5, 2) + pow (3.5 - 5, 2))
+2.1213203435596424
+// colocar em porcentagem
+
+>>> 1/ (1 + sqrt (pow(3 - 3, 2) + pow (3.5 - 4, 2)))
+0.6666666666666666
+
+>>> 1/ (1 +sqrt (pow(3 - 1.5, 2) + pow (3.5 - 5, 2)))
+0.32037724101704074
+
+
+aula 11 - funçao para distancia euclidiana em python
+
+SCRIPT
+
+avaliacoes = {'Ana': 
+		{'Freddy x Jason': 2.5, 
+		 'O Ultimato Bourne': 3.5,
+		 'Star Trek': 3.0, 
+		 'Exterminador do Futuro': 3.5, 
+		 'Norbit': 2.5, 
+		 'Star Wars': 3.0},
+	 
+	  'Marcos': 
+		{'Freddy x Jason': 3.0, 
+		 'O Ultimato Bourne': 3.5, 
+		 'Star Trek': 1.5, 
+		 'Exterminador do Futuro': 5.0, 
+		 'Star Wars': 3.0, 
+		 'Norbit': 3.5}, 
+
+	  'Pedro': 
+	    {'Freddy x Jason': 2.5, 
+		 'O Ultimato Bourne': 3.0,
+		 'Exterminador do Futuro': 3.5, 
+		 'Star Wars': 4.0},
+			 
+	  'Claudia': 
+		{'O Ultimato Bourne': 3.5, 
+		 'Star Trek': 3.0,
+		 'Star Wars': 4.5, 
+		 'Exterminador do Futuro': 4.0, 
+		 'Norbit': 2.5},
+				 
+	  'Adriano': 
+		{'Freddy x Jason': 3.0, 
+		 'O Ultimato Bourne': 4.0, 
+		 'Star Trek': 2.0, 
+		 'Exterminador do Futuro': 3.0, 
+		 'Star Wars': 3.0,
+		 'Norbit': 2.0}, 
+
+	  'Janaina': 
+	     {'Freddy x Jason': 3.0, 
+	      'O Ultimato Bourne': 4.0,
+	      'Star Wars': 3.0, 
+	      'Exterminador do Futuro': 5.0, 
+	      'Norbit': 3.5},
+			  
+	  'Leonardo': 
+	    {'O Ultimato Bourne':4.5,
+             'Norbit':1.0,
+	     'Exterminador do Futuro':4.0}
+}
+
+
+
+# biblioteca para usr raiz quadrada
+from math import sqrt
+
+# fucao euclidiana entre dois usuarios, ou seja, mede a distancia entre dois usuarios que avaliam filmes
+def euclidiana(usuario1, usuario2):
+    si = {} # lista chamada de si
+    for item in avaliacoes[usuario1]:  # faz uma varredura nos filmes que foram vistos pelo user 1
+        if item in avaliacoes[usuario2]: si [item] = 1 # verifica se os filmes que user 1 se estao no user 2 
+
+    if len (si) == 0: return 0 # se não tiver filmes em comum, retornamos Zero
+
+    soma = sum([pow(avaliacoes[usuario1][item] - avaliacoes[usuario2][item], 2) # formula euclidiana de dois usuarus
+                for item in avaliacoes[usuario1] if item in avaliacoes[usuario2]])
+    return 1/(1 + sqrt (soma)) # faz retorno
+
+
+
+
+---------------
+Aula 12 - Testando a funlçao da distância Euclidiana
+
+
+
+>>> from recomendacao import euclidiana
+>>> euclidiana('Leonardo', 'Ana')
+0.3483314773547883
+# quer dizer que retornou 35 similar entre dos dis usuários
+
+
+Aula 13 - Retornando a similardade de todos os usuarios
+
+>>> from recomendacao import getSimilares
+>>> getSimilares('Ana')
+[(0.4721359549995794, 'Pedro'), (0.4142135623730951, 'Adriano'), (0.38742588672279304, 'Claudia'), (0.3483314773547883, 'Leonardo'), (0.3405424265831667, 'Janaina'), (0.29429805508554946, 'Marcos')]
+
+
+-------------------- aula 19 - testando as recomendaçoes
+
+>>> from recomendacao import getRecomendacoes
+>>> getRecomendacoes('Leonardo')
+[(3.457128694491423, 'Star Wars'), (2.778584003814924, 'Freddy x Jason'), (2.422482042361917, 'Star Trek')]
+
+>>> getRecomendacoes('Pedro')
+[(2.4825817086405517, 'Star Trek'), (2.453379230569188, 'Norbit')]
+
+>>> getRecomendacoes('Claudia')
+[(2.74908990418004, 'Freddy x Jason')]
+
+
+---------------------21 - filmes similares I  - inversão da ase de dados
+
+>>> from recomendacao import avaliacoes
+>>> avaliacoes['Freddy x Jason']
+{'Ana': 2.5, 'Marcos:': 3.0, 'Pedro': 2.5, 'Adriano': 3.0, 'Janaina': 3.0}
+
+
+>>> from recomendacao import getSimilares
+>>> getSimilares('Star Wars')
+[(0.3761785115301142, 'Freddy x Jason'), (0.3266316347104093, 'O Ultimato Bourne'), (0.29429805508554946, 'Norbit'), (0.27429188517743175, 'Exterminador do Futuro'), (0.2708131845707603, 'Star Trek')]
+
+>>> from recomendacao import getRecomendacoes
+>>> getRecomendacoes('Star Wars')
+[(3.4999999999999996, 'Marcos'), (3.196200842319029, 'Leonardo')]
+---------------------------
+
+### importa todas as avaliacoes
+
+>>> from recomendacao import *
+>>> euclidiana(avaliacoesUsuario,'Pedro','Janaina')
+0.32037724101704074
+>>> euclidiana(avaliacoesFilme,'Freddy x Jason','O Ultimato Bourne')
+0.3567891723253309
+>>> getSimilares(avaliacoesUsuario, 'Pedro')
+[(0.5358983848622454, 'Claudia'), (0.4721359549995794, 'Ana'), (0.38742588672279304, 'Leonardo'), (0.38742588672279304, 'Adriano'), (0.3405424265831667, 'Marcos'), (0.32037724101704074, 'Janaina')]
+>>> getSimilares(avaliacoesFilme,'Freddy x Jason')
+[(0.4721359549995794, 'Norbit'), (0.3761785115301142, 'Star Wars'), (0.3567891723253309, 'O Ultimato Bourne'), (0.3483314773547883, 'Star Trek'), (0.2402530733520421, 'Exterminador do Futuro')]
+>>> getRecomendacoes(avaliacoesUsuario, 'Pedro')
+[(2.4825817086405517, 'Star Trek'), (2.453379230569188, 'Norbit')]
+>>> getRecomendacoes(avaliacoesFilme,'Freddy x Jason')
+[(3.5, 'Marcos'), (3.4163752951356177, 'Claudia'), (2.8420889258196422, 'Leonardo')]
+
+
+
+---------------------------25
+>>> from recomendacao import *
+>>> base = carregaMovieLens()
+>>> getSimilares(base, '212')
+[(1.0, '915'), (1.0, '866'), (1.0, '856'), (1.0, '850'), (1.0, '849'), (1.0, '837'), (1.0, '820'), (1.0, '818'), (1.0, '81'), (1.0, '809'), (1.0, '808'), (1.0, '801'), (1.0, '78'), (1.0, '770'), (1.0, '759'), (1.0, '75'), (1.0, '722'), (1.0, '71'), (1.0, '612'), (1.0, '61'), (1.0, '596'), (1.0, '584'), (1.0, '583'), (1.0, '580'), (1.0, '575'), (1.0, '572'), (1.0, '57'), (1.0, '547'), (1.0, '544'), (1.0, '53')]
+
+
+
+29
+
+
+
+>>> itensSimilares = calculaItensSimilares(avaliacoesFilme)
+>>> itensSimilares
+{'Freddy x Jason': [(0.4721359549995794, 'Norbit'), (0.3761785115301142, 'Star Wars'), (0.3567891723253309, 'O Ultimato Bourne'), (0.3483314773547883, 'Star Trek'), (0.2402530733520421, 'Exterminador do Futuro')], 'O Ultimato Bourne': [(0.3761785115301142, 'Exterminador do Futuro'), (0.3567891723253309, 'Freddy x Jason'), (0.3266316347104093, 'Star Wars'), (0.32037724101704074, 'Star Trek'), (0.1886378647726465, 'Norbit')], 'Star Trek': [(0.3761785115301142, 'Norbit'), (0.3483314773547883, 'Freddy x Jason'), (0.32037724101704074, 'O Ultimato Bourne'), (0.2708131845707603, 'Star Wars'), (0.20799159651347807, 'Exterminador do Futuro')], 'Exterminador do Futuro': [(0.3761785115301142, 'O Ultimato Bourne'), (0.27429188517743175, 'Star Wars'), (0.2402530733520421, 'Freddy x Jason'), (0.20799159651347807, 'Star Trek'), (0.18464218557642828, 'Norbit')], 'Norbit': [(0.4721359549995794, 'Freddy x Jason'), (0.3761785115301142, 'Star Trek'), (0.29429805508554946, 'Star Wars'), (0.1886378647726465, 'O Ultimato Bourne'), (0.18464218557642828, 'Exterminador do Futuro')], 'Star Wars': [(0.3761785115301142, 'Freddy x Jason'), (0.3266316347104093, 'O Ultimato Bourne'), (0.29429805508554946, 'Norbit'), (0.27429188517743175, 'Exterminador do Futuro'), (0.2708131845707603, 'Star Trek')]}
+
+
+
+
+
+
+
+
+
+
+
+
+30
+
+
+
+>>> getRecomendacoesUsuario(avaliacoesUsuario, 'Leonardo')
+[(3.457128694491423, 'Star Wars'), (2.778584003814924, 'Freddy x Jason'), (2.422482042361917, 'Star Trek')]
+>>> listaitens = calculaItensSimilares(avaliacoesFilme)
+>>> listaitens
+{'Freddy x Jason': [(0.4721359549995794, 'Norbit'), (0.3761785115301142, 'Star Wars'), (0.3567891723253309, 'O Ultimato Bourne'), (0.3483314773547883, 'Star Trek'), (0.2402530733520421, 'Exterminador do Futuro')], 'O Ultimato Bourne': [(0.3761785115301142, 'Exterminador do Futuro'), (0.3567891723253309, 'Freddy x Jason'), (0.3266316347104093, 'Star Wars'), (0.32037724101704074, 'Star Trek'), (0.1886378647726465, 'Norbit')], 'Star Trek': [(0.3761785115301142, 'Norbit'), (0.3483314773547883, 'Freddy x Jason'), (0.32037724101704074, 'O Ultimato Bourne'), (0.2708131845707603, 'Star Wars'), (0.20799159651347807, 'Exterminador do Futuro')], 'Exterminador do Futuro': [(0.3761785115301142, 'O Ultimato Bourne'), (0.27429188517743175, 'Star Wars'), (0.2402530733520421, 'Freddy x Jason'), (0.20799159651347807, 'Star Trek'), (0.18464218557642828, 'Norbit')], 'Norbit': [(0.4721359549995794, 'Freddy x Jason'), (0.3761785115301142, 'Star Trek'), (0.29429805508554946, 'Star Wars'), (0.1886378647726465, 'O Ultimato Bourne'), (0.18464218557642828, 'Exterminador do Futuro')], 'Star Wars': [(0.3761785115301142, 'Freddy x Jason'), (0.3266316347104093, 'O Ultimato Bourne'), (0.29429805508554946, 'Norbit'), (0.27429188517743175, 'Exterminador do Futuro'), (0.2708131845707603, 'Star Trek')]}
+>>> getRecomendacoesItens(avaliacoesUsuario, listaitens, 'Leonardo')
+[(3.1962008423190285, 'Star Wars'), (2.929467965289551, 'Star Trek'), (2.8420889258196413, 'Freddy x Jason')]
